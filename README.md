@@ -1,6 +1,16 @@
 # mapa-ajuda
 
-**PT** · [EN](#en) · [ES](#es)
+[![Mapa de Ajuda](guia/assets/banner.jpg)](https://inematds.github.io/mapa-ajuda/guia/)
+
+**🇧🇷 [Português](README.md) · 🇺🇸 [English](README.en.md) · 🇪🇸 [Español](README.es.md)**
+
+## O que é
+
+O mapa-ajuda é um modelo pronto de central de ajuda para sites, cursos, comunidades e produtos. Em vez de uma lista de perguntas frequentes, o visitante clica no problema que tem agora e vê um caminho em etapas, com o link certo em cada uma. Serve para quem recebe sempre as mesmas dúvidas ou tem conteúdo espalhado em vários lugares. É uma página HTML só: para usar, basta editar um arquivo de texto com os seus caminhos e publicar em qualquer hospedagem.
+
+## 📖 Guia de uso
+
+Guia completo (landing + passo a passo): **https://inematds.github.io/mapa-ajuda/guia/**
 
 Modelo de **central de ajuda em formato de mapa**: a pessoa escolhe o problema que tem agora e recebe um caminho em ordem, com perguntas de sim ou não e o link certo em cada etapa. Uma página HTML, sem build e sem servidor, com ilustração 3D em cada cartão (opcional: sem imagem, o cartão usa ícone).
 
@@ -45,14 +55,3 @@ Recursos: link direto para cada caminho (`#id`), tecla Esc fecha, tema lembrado,
 
 MIT.
 
----
-
-<a id="en"></a>
-## EN
-
-A **map-style help center** template: visitors pick the problem they have right now and get an ordered path with yes/no questions and the right link at each step. One HTML page, no build, no server, with a 3D illustration on each card (optional). Copy `exemplos/config.vazio.js` to `config.js`, edit texts and links, publish on any static host. Live INEMA example: https://inematds.github.io/mapa-ajuda/
-
-<a id="es"></a>
-## ES
-
-Plantilla de **centro de ayuda en forma de mapa**: la persona elige el problema que tiene ahora y recibe un camino ordenado, con preguntas de sí o no y el enlace correcto en cada etapa. Una sola página HTML, sin build ni servidor, con una ilustración 3D en cada tarjeta (opcional). Copia `exemplos/config.vazio.js` a `config.js`, edita textos y enlaces y publica en cualquier hosting estático. Ejemplo INEMA en vivo: https://inematds.github.io/mapa-ajuda/

@@ -1,0 +1,336 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>mapa-ajuda — central de ajuda em formato de mapa</title>
+<meta name="description" content="Modelo aberto de central de ajuda em formato de mapa: o visitante escolhe o problema e recebe um caminho em etapas, com perguntas de sim ou não e o link certo em cada uma.">
+<link rel="alternate" hreflang="pt-BR" href="https://inematds.github.io/mapa-ajuda/guia/">
+<link rel="alternate" hreflang="en" href="https://inematds.github.io/mapa-ajuda/guia/en/">
+<link rel="alternate" hreflang="es" href="https://inematds.github.io/mapa-ajuda/guia/es/">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Sora:wght@400;600;800&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --bg:#0c0c10; --bg2:#14141b; --card:#16161e; --line:#272730;
+    --txt:#e9e9ee; --mut:#9a9aa6; --amb:#E2A23B; --amb2:#f0c070; --sky:#38bdf8; --pro:#cbd5e1;
+    color-scheme:dark;
+  }
+  body.light{
+    --bg:#f6f7f9; --bg2:#eceef2; --card:#ffffff; --line:#e1e3ea;
+    --txt:#1a1a22; --mut:#5b5b68; --amb:#b9791d; --amb2:#a16207; --sky:#0369a1; --pro:#b45309;
+    color-scheme:light;
+  }
+  body.light .hero .glow{opacity:.5}
+  body.light pre{background:#0e0e14;color:#d6d6e0}
+  body.light pre .c{color:#8a8a98}
+  *{box-sizing:border-box}
+  html{scroll-behavior:smooth}
+  body{margin:0;background:var(--bg);color:var(--txt);font:16px/1.65 Inter,system-ui,sans-serif;-webkit-font-smoothing:antialiased}
+  h1,h2,h3{font-family:Sora,sans-serif;line-height:1.15;margin:0}
+  a{color:var(--amb);text-decoration:none}
+  code,pre{font-family:"JetBrains Mono",monospace}
+  .wrap{max-width:1160px;margin:0 auto;padding:0 22px}
+  .mut{color:var(--mut)} .amb{color:var(--amb)}
+  .chip{display:inline-block;font-size:.72rem;letter-spacing:.14em;text-transform:uppercase;color:var(--amb);font-weight:600;font-family:Sora}
+  nav{position:sticky;top:0;z-index:30;backdrop-filter:blur(12px);background:rgba(12,12,16,.78);border-bottom:1px solid var(--line)}
+  nav .wrap{display:flex;align-items:center;gap:22px;height:60px}
+  nav .brand{display:flex;align-items:center;gap:8px;font-family:Sora;font-weight:800;letter-spacing:-.02em;color:var(--amb)}
+  nav .brand .emoji{font-size:1.25rem}
+  nav .sep{color:var(--mut);opacity:.45}
+  nav .inema{color:var(--sky);font-weight:600;font-size:.88rem;font-family:Sora}
+  nav .inema:hover{filter:brightness(1.15)}
+  nav .pro{color:var(--pro);font-weight:600;font-size:.88rem;font-family:Sora}
+  nav .pro:hover{filter:brightness(1.15)}
+  nav .clubpro{display:inline-flex;align-items:center;gap:6px}
+  nav .links{margin-left:auto;display:flex;align-items:center;gap:20px;font-size:.92rem}
+  nav .links a.sec{color:var(--mut)} nav .links a.sec:hover{color:var(--txt)}
+  .lang{display:inline-flex;gap:2px;font-family:Sora;font-size:.78rem}
+  .lang a{color:var(--mut);padding:.2em .45em;border-radius:6px} .lang a.on{color:var(--amb);background:rgba(226,162,59,.12)}
+  .tgl{background:var(--bg2);border:1px solid var(--line);color:var(--txt);width:38px;height:38px;border-radius:10px;cursor:pointer;display:inline-flex;align-items:center;justify-content:center;font-size:1.05rem}
+  .tgl:hover{border-color:var(--amb)}
+  .btn{display:inline-block;background:var(--amb);color:#1a1206;font-weight:600;padding:.6em 1.05em;border-radius:10px;font-family:Sora}
+  .btn.ghost{background:transparent;color:var(--txt);border:1px solid var(--line)}
+  @media(max-width:760px){nav .links a.sec{display:none}}
+  @media(max-width:520px){nav .wrap{gap:8px;padding:8px 14px;height:auto;flex-wrap:wrap} nav .links{gap:8px;margin-left:0;width:100%;justify-content:space-between} nav .btn{padding:.45em .7em;font-size:.82rem} .tgl{width:34px;height:34px}}
+  .hero{position:relative;overflow:hidden;border-bottom:1px solid var(--line)}
+  .hero .glow{position:absolute;inset:-40% -20% auto auto;width:70%;height:600px;background:radial-gradient(closest-side,rgba(226,162,59,.22),transparent 70%);pointer-events:none}
+  .hero .wrap{display:grid;grid-template-columns:1.1fr .9fr;gap:40px;align-items:center;padding:74px 22px}
+  .hero h1{font-size:clamp(2.2rem,5vw,3.5rem);font-weight:800;letter-spacing:-.025em}
+  .hero p.lead{font-size:1.18rem;color:var(--mut);margin:1.1em 0 1.6em;max-width:34ch}
+  .hero .cta{display:flex;gap:12px;flex-wrap:wrap}
+  .hero figure{margin:0;border-radius:16px;overflow:hidden;border:1px solid var(--line);box-shadow:0 30px 80px -30px #000}
+  .hero figure img{width:100%;display:block}
+  .resumo{padding:38px 0 34px;border-bottom:1px solid var(--line)}
+  .resumo p{font-size:1.12rem;line-height:1.7;max-width:74ch;margin:.55em 0 0}
+  @media(max-width:780px){.hero .wrap{grid-template-columns:1fr;padding:48px 22px}}
+  section{padding:62px 0;border-bottom:1px solid var(--line)}
+  section h2{font-size:clamp(1.5rem,3.4vw,2.1rem);font-weight:800;letter-spacing:-.02em}
+  section .sub{color:var(--mut);margin:.6em 0 2em;max-width:62ch}
+  .grid{display:grid;gap:16px}
+  .g3{grid-template-columns:repeat(3,1fr)} .g4{grid-template-columns:repeat(4,1fr)} .g2{grid-template-columns:repeat(2,1fr)}
+  @media(max-width:820px){.g3,.g4{grid-template-columns:1fr 1fr}}
+  @media(max-width:540px){.g2,.g3,.g4{grid-template-columns:1fr}}
+  .card{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:20px}
+  .card h3{font-size:1.05rem;margin-bottom:.4em}
+  .card p{color:var(--mut);font-size:.92rem;margin:0}
+  .num{display:inline-flex;width:30px;height:30px;align-items:center;justify-content:center;border-radius:8px;background:rgba(226,162,59,.14);color:var(--amb);font-family:Sora;font-weight:800;font-size:.9rem;margin-bottom:.7em}
+  .flow{display:flex;flex-wrap:wrap;gap:8px;align-items:center;margin-top:10px}
+  .flow span{background:var(--bg2);border:1px solid var(--line);border-radius:999px;padding:.45em .9em;font-size:.85rem;font-family:Sora;font-weight:600}
+  .flow .arr{color:var(--amb);border:none;background:none;padding:0 .1em}
+  pre{background:#0a0a0e;border:1px solid var(--line);border-radius:12px;padding:16px 18px;overflow:auto;font-size:.86rem;line-height:1.6;color:#d6d6e0}
+  pre .c{color:#6f6f7c} pre .k{color:var(--amb2)} pre .s{color:#9ece6a}
+  .step{display:grid;grid-template-columns:46px minmax(0,1fr);gap:16px;margin-bottom:26px}
+  .step>div,.card{min-width:0}
+  p code,li code,td code{overflow-wrap:anywhere}
+  .step .b{width:46px;height:46px;border-radius:12px;background:var(--amb);color:#1a1206;font-family:Sora;font-weight:800;font-size:1.25rem;display:flex;align-items:center;justify-content:center}
+  .step h3{font-size:1.12rem;margin-bottom:.3em}
+  .step p{color:var(--mut);margin:.2em 0 .7em}
+  .ex{display:grid;grid-template-columns:1fr 1fr;gap:18px}
+  @media(max-width:680px){.ex{grid-template-columns:1fr}}
+  .ex figure{margin:0;border-radius:14px;overflow:hidden;border:1px solid var(--line)}
+  .ex figure img{width:100%;display:block}
+  .ex figcaption{padding:12px 14px;font-size:.88rem;color:var(--mut);background:var(--card)}
+  .phase{display:flex;gap:14px;padding:16px 0;border-bottom:1px solid var(--line)}
+  .phase:last-child{border:none}
+  .phase .tag{flex:0 0 92px;font-family:Sora;font-weight:800;color:var(--amb)}
+  .phase .d strong{display:block;margin-bottom:.2em}
+  .phase .d span{color:var(--mut);font-size:.92rem}
+  footer{padding:46px 0;text-align:center;color:var(--mut);font-size:.9rem}
+  .pill{display:inline-block;border:1px solid var(--line);border-radius:999px;padding:.3em .8em;font-size:.78rem;color:var(--mut);margin:0 4px}
+</style>
+<style>
+  .demo{display:grid;grid-template-columns:1.1fr .9fr;gap:28px;align-items:center;background:linear-gradient(135deg,rgba(226,162,59,.14),rgba(56,189,248,.06));border:1px solid var(--line);border-radius:22px;padding:28px}
+  .demo img{width:100%;display:block;border-radius:14px;border:1px solid var(--line)}
+  .demo h2{margin-top:.2em}
+  .demo .cta{margin-top:18px}
+  @media(max-width:820px){.demo{grid-template-columns:1fr;padding:20px}}
+  .tipos{display:grid;grid-template-columns:repeat(5,1fr);gap:12px;margin-top:22px}
+  @media(max-width:900px){.tipos{grid-template-columns:1fr 1fr}}
+  @media(max-width:520px){.tipos{grid-template-columns:1fr}}
+  .tipos .card h3{font-size:1rem}
+  .tipos .card code{font-family:'JetBrains Mono',monospace;font-size:.78rem;color:var(--amb)}
+  .ex.tres{grid-template-columns:1.2fr 1.2fr .6fr;align-items:start}
+  @media(max-width:880px){.ex.tres{grid-template-columns:1fr}}
+</style>
+</head>
+<body>
+
+
+<nav><div class="wrap">
+  <a class="brand" href="#top"><span class="emoji">🗺️</span> mapa-ajuda</a>
+  <span class="sep">|</span>
+  <span class="clubpro">
+    <a class="inema" href="https://inema.club" target="_blank" rel="noopener">INEMA.CLUB</a>
+    <span class="sep">-</span>
+    <a class="pro" href="https://inema.pro" target="_blank" rel="noopener">PRO</a>
+  </span>
+  <div class="links">
+    <a class="sec" href="#oque">O que é</a>
+    <a class="sec" href="#fluxo">Como funciona</a>
+    <a class="sec" href="#guia">Guia de uso</a>
+    <a class="sec" href="#exemplos">Exemplos</a>
+    <a class="sec" href="#roadmap">Roadmap</a>
+    <span class="lang"><a class="on" href="./">PT</a><a href="en/">EN</a><a href="es/">ES</a></span>
+    <button class="tgl" id="themeToggle" aria-label="Alternar tema" title="Alternar tema">🌙</button>
+    <a class="btn" href="https://github.com/inematds/mapa-ajuda" target="_blank" rel="noopener">GitHub</a>
+  </div>
+</div></nav>
+
+<header class="hero" id="top">
+  <div class="glow"></div>
+  <div class="wrap">
+    <div>
+      <span class="chip">Modelo aberto · MIT · sem build</span>
+      <h1>Sua central de ajuda vira um <span class="amb">mapa</span></h1>
+      <p class="lead">Em vez de FAQ, a pessoa escolhe o problema que tem agora e recebe um caminho em ordem, com perguntas de sim ou não e o link certo em cada etapa.</p>
+      <div class="cta">
+        <a class="btn" href="../" target="_blank" rel="noopener">Ver o mapa ao vivo</a>
+        <a class="btn ghost" href="#guia">Começar o guia</a>
+      </div>
+    </div>
+    <figure><img src="assets/banner.jpg" alt="Mapa de Ajuda: cada problema vira um caminho com etapas e links"></figure>
+  </div>
+</header>
+
+<section id="resumo" class="resumo"><div class="wrap">
+  <span class="chip">Em resumo</span>
+  <p>O mapa-ajuda é um modelo pronto de central de ajuda para sites, cursos, comunidades e produtos. Em vez de uma lista de perguntas frequentes, o visitante clica no problema que tem agora e vê um caminho em etapas, com o link certo em cada uma. Serve para quem recebe sempre as mesmas dúvidas ou tem conteúdo espalhado em vários lugares. É uma página HTML só: para usar, basta editar um arquivo de texto com os seus caminhos e publicar em qualquer hospedagem.</p>
+</div></section>
+
+<section id="oque"><div class="wrap">
+  <span class="chip">O que é</span>
+  <h2>Ajuda que mostra o caminho, não uma lista de artigos</h2>
+  <p class="sub">Três ideias fazem o mapa funcionar melhor que um FAQ.</p>
+  <figure style="margin:0 0 26px;border-radius:16px;overflow:hidden;border:1px solid var(--line);box-shadow:0 30px 80px -30px #000"><img src="assets/banner-grade.jpg" alt="Mapa de Ajuda: escolha o problema, passos em ordem, perguntas de sim ou não" loading="lazy" style="width:100%;display:block"></figure>
+  <div class="grid g3">
+    <div class="card"><h3>🧭 Um problema, um caminho</h3><p>Os cartões são escritos como a pessoa pediria ajuda ("não encontro um conteúdo"). Um clique abre as etapas em ordem, na mesma página.</p></div>
+    <div class="card"><h3>❓ Perguntas de corte</h3><p>No ponto em que a maioria trava, uma pergunta de sim ou não manda de volta quem ainda não fez o pré-requisito. Menos dúvida repetida no suporte.</p></div>
+    <div class="card"><h3>📄 Um arquivo só</h3><p>Visual e lógica ficam no <code>index.html</code>. Textos, links e ilustrações ficam no <code>config.js</code>. Trocou o arquivo, trocou o mapa.</p></div>
+  </div>
+</div></section>
+
+<section id="demo"><div class="wrap">
+  <div class="demo">
+    <div>
+      <span class="chip">Veja funcionando</span>
+      <h2>O mapa do ecossistema INEMA</h2>
+      <p class="sub">O modelo já vem configurado com 6 caminhos que cobrem inema.club, inema.pro, inema.vip, eventos, news, busca e o arquivo de aventura. Clique num cartão e siga as etapas. Há também um exemplo genérico, de uma empresa fictícia, para usar como ponto de partida.</p>
+      <div class="cta">
+        <a class="btn" href="../" target="_blank" rel="noopener">Abrir o mapa INEMA</a>
+        <a class="btn ghost" href="../?config=exemplos/config.vazio.js" target="_blank" rel="noopener">Abrir o exemplo genérico</a>
+      </div>
+    </div>
+    <a href="../" target="_blank" rel="noopener"><img src="assets/ex-mapa.jpg" alt="Página do Mapa de Ajuda com seis cartões ilustrados" loading="lazy"></a>
+  </div>
+</div></section>
+
+<section id="fluxo"><div class="wrap">
+  <span class="chip">Como funciona</span>
+  <h2>Do cartão ao link certo</h2>
+  <p class="sub">Cada caminho é uma sequência de peças. O motor monta a trilha na horizontal no computador e em coluna no celular.</p>
+  <div class="flow">
+    <span>Escolhe o problema</span><span class="arr">→</span>
+    <span>Abre o caminho</span><span class="arr">→</span>
+    <span>Passo com link</span><span class="arr">→</span>
+    <span>Pergunta sim/não</span><span class="arr">→</span>
+    <span>Saída para outro caminho</span>
+  </div>
+  <div class="tipos">
+    <div class="card"><h3>Passo</h3><p>Uma ação com um link. <code>passo</code></p></div>
+    <div class="card"><h3>Seta</h3><p>O que leva ao próximo: "Não achou?", "Se sim". <code>seta</code></p></div>
+    <div class="card"><h3>Pergunta</h3><p>Sim ou não, com um desvio para quem não está pronto. <code>pergunta</code></p></div>
+    <div class="card"><h3>Lista</h3><p>Várias opções do mesmo nível, numeradas. <code>lista</code></p></div>
+    <div class="card"><h3>Saída</h3><p>Leva a outro cartão e liga os caminhos. <code>saida</code></p></div>
+  </div>
+</div></section>
+
+<section id="pre"><div class="wrap">
+  <span class="chip">Pré-requisitos</span>
+  <h2>O que você precisa</h2>
+  <p class="sub">Nada de instalar framework. Um editor de texto e um lugar para publicar.</p>
+  <div class="grid g3">
+    <div class="card"><h3>Editor de texto</h3><p>Qualquer um serve (VS Code, Notepad++, o do sistema). Você só edita o <code>config.js</code>.</p><pre><span class="c"># abrir a pasta no VS Code</span>
+<span class="k">code</span> mapa-ajuda</pre></div>
+    <div class="card"><h3>Git (opcional)</h3><p>Para copiar o modelo e publicar no GitHub Pages. Sem Git, baixe o ZIP pelo GitHub.</p><pre><span class="c"># conferir se está instalado</span>
+<span class="k">git</span> --version</pre></div>
+    <div class="card"><h3>Hospedagem estática</h3><p>GitHub Pages, Vercel, Netlify ou o servidor do seu site. Também abre direto no navegador.</p><pre><span class="c"># testar no computador</span>
+<span class="k">python3</span> -m http.server 8000</pre></div>
+  </div>
+</div></section>
+
+<section id="guia"><div class="wrap">
+  <span class="chip">Guia de uso · passo a passo</span>
+  <h2>Monte o mapa de ajuda do seu negócio</h2>
+  <p class="sub">Seis passos, do download à página no ar.</p>
+
+  <div class="step"><div class="b">1</div><div>
+    <h3>Copie o modelo</h3>
+    <p>Clone o repositório (ou use "Use this template" no GitHub, ou baixe o ZIP).</p>
+<pre><span class="k">git clone</span> <span class="s">https://github.com/inematds/mapa-ajuda.git</span> meu-mapa
+<span class="k">cd</span> meu-mapa</pre>
+  </div></div>
+
+  <div class="step"><div class="b">2</div><div>
+    <h3>Comece pelo exemplo genérico</h3>
+    <p>O <code>config.js</code> que vem no repo é o do INEMA. Troque pelo exemplo em branco, que já traz comentários com todos os campos.</p>
+<pre><span class="k">cp</span> exemplos/config.vazio.js config.js</pre>
+  </div></div>
+
+  <div class="step"><div class="b">3</div><div>
+    <h3>Escreva um caminho</h3>
+    <p>Cada problema é um cartão. O <code>fluxo</code> é a lista de peças, na ordem em que aparecem. Texto aceita <code>**negrito**</code>.</p>
+<pre>{
+  id: <span class="s">'suporte'</span>,
+  titulo: <span class="s">'Algo deu errado'</span>,
+  resumo: <span class="s">'Erro, acesso ou cobrança.'</span>,
+  icone: <span class="s">'escudo'</span>,
+  imagem: <span class="s">'assets/suporte.webp'</span>,  <span class="c">// opcional</span>
+  fluxo: [
+    { tipo: <span class="s">'passo'</span>, rotulo: <span class="s">'Mais rápido'</span>, tempo: <span class="s">'Na hora'</span>, titulo: <span class="s">'Busque na base de ajuda'</span>,
+      link: { texto: <span class="s">'Buscar'</span>, url: <span class="s">'https://exemplo.com/ajuda'</span> } },
+    { tipo: <span class="s">'seta'</span>, rotulo: <span class="s">'Não achou?'</span> },
+    { tipo: <span class="s">'pergunta'</span>, pergunta: <span class="s">'Você já tem conta?'</span>,
+      ramo: { rotulo: <span class="s">'Se não'</span>, tipo: <span class="s">'nao'</span>, titulo: <span class="s">'Crie primeiro.'</span>, abrir: <span class="s">'primeiros-passos'</span> } },
+    { tipo: <span class="s">'seta'</span>, rotulo: <span class="s">'Se sim'</span>, cor: <span class="s">'sim'</span> },
+    { tipo: <span class="s">'saida'</span>, pergunta: <span class="s">'Ainda travado?'</span>, texto: <span class="s">'Falar com uma pessoa'</span>, destino: <span class="s">'contato'</span> }
+  ]
+}</pre>
+  </div></div>
+
+  <div class="step"><div class="b">4</div><div>
+    <h3>Coloque as ilustrações</h3>
+    <p>Salve uma imagem por cartão em <code>assets/</code> (WebP, 3:2, até ~100 KB) e aponte no campo <code>imagem</code>. A capa da página vai em <code>capa</code>. Sem imagem, o cartão mostra o ícone. Use a mesma linha visual em todas: mesma paleta, luz e fundo, sem texto dentro da imagem.</p>
+<pre><span class="c"># converter uma imagem para WebP leve</span>
+<span class="k">ffmpeg</span> -i arte.png -vf scale=960:-1 -q:v 80 assets/suporte.webp</pre>
+  </div></div>
+
+  <div class="step"><div class="b">5</div><div>
+    <h3>Teste no computador</h3>
+    <p>Abra o servidor local e clique em todos os cartões. Cada caminho tem endereço próprio: <code>#suporte</code> abre direto o caminho de suporte.</p>
+<pre><span class="k">python3</span> -m http.server 8000  <span class="c"># abra http://localhost:8000/#suporte</span></pre>
+  </div></div>
+
+  <div class="step"><div class="b">6</div><div>
+    <h3>Publique</h3>
+    <p>Suba para o GitHub e ligue o Pages (ou arraste a pasta para a Vercel ou a Netlify). Não há build.</p>
+<pre><span class="k">git add</span> -A && <span class="k">git commit</span> -m <span class="s">"meu mapa de ajuda"</span> && <span class="k">git push</span>
+<span class="k">gh api</span> -X POST repos/<span class="s">&lt;usuario&gt;/&lt;repo&gt;</span>/pages -f <span class="s">'source[branch]=main'</span> -f <span class="s">'source[path]=/'</span></pre>
+  </div></div>
+
+  <h2 style="margin-top:42px">Como escrever um bom caminho</h2>
+  <div class="grid g3">
+    <div class="card"><h3>Na voz de quem pede</h3><p>"Preciso de ajuda com acesso", não "Suporte". A pessoa tem que se reconhecer no cartão.</p></div>
+    <div class="card"><h3>De 3 a 5 etapas</h3><p>Mais que isso, quebre em dois caminhos e ligue com uma Saída.</p></div>
+    <div class="card"><h3>Uma pergunta de corte</h3><p>No ponto onde a maioria trava. Quem não fez o anterior volta uma casa.</p></div>
+    <div class="card"><h3>Um link por passo</h3><p>E um verbo no botão: "Abrir", "Buscar", "Escrever".</p></div>
+    <div class="card"><h3>Canais em ordem de velocidade</h3><p>No suporte: o que responde na hora primeiro, pessoas depois, e-mail por último.</p></div>
+    <div class="card"><h3>Nunca um beco sem saída</h3><p>Todo caminho termina em outro caminho ou num canal humano.</p></div>
+  </div>
+</div></section>
+
+<section id="exemplos"><div class="wrap">
+  <span class="chip">Exemplos</span>
+  <h2>O mapa do INEMA, em três telas</h2>
+  <p class="sub">Tudo isso sai do mesmo <code>config.js</code>, sem mexer no motor.</p>
+  <div class="ex tres">
+    <figure><a href="../" target="_blank" rel="noopener"><img src="assets/ex-mapa.jpg" alt="Capa e cartões ilustrados do mapa" loading="lazy"></a><figcaption>A capa e os seis cartões, cada um com sua ilustração e a contagem de etapas.</figcaption></figure>
+    <figure><a href="../#comecar" target="_blank" rel="noopener"><img src="assets/ex-caminho.jpg" alt="Caminho Não sei por onde começar aberto" loading="lazy"></a><figcaption>O caminho "Não sei por onde começar": passos, pergunta de corte e a saída para o próximo caminho.</figcaption></figure>
+    <figure><a href="../#suporte" target="_blank" rel="noopener"><img src="assets/ex-celular.jpg" alt="Mapa no celular, tema escuro" loading="lazy"></a><figcaption>No celular, tema escuro, aberto direto pelo link do caminho.</figcaption></figure>
+  </div>
+</div></section>
+
+<section id="roadmap"><div class="wrap">
+  <span class="chip">Roadmap</span>
+  <h2>O que já existe e o que pode vir</h2>
+  <p class="sub">O que está marcado como ideia ainda não foi feito.</p>
+  <div class="phase"><div class="tag">Feito</div><div class="d"><strong>Motor + configuração + exemplos</strong><span>Página única com 5 tipos de peça, tema claro/escuro, link direto por caminho, ilustrações opcionais, mapa do ecossistema INEMA e exemplo genérico.</span></div></div>
+  <div class="phase"><div class="tag">Ideia</div><div class="d"><strong>Mapa em vários idiomas</strong><span>Um <code>config.js</code> por idioma e seletor na página.</span></div></div>
+  <div class="phase"><div class="tag">Ideia</div><div class="d"><strong>Busca dentro do mapa</strong><span>Digitar a dúvida e ir direto ao caminho certo.</span></div></div>
+  <div class="phase"><div class="tag">Ideia</div><div class="d"><strong>Medir onde as pessoas param</strong><span>Contar quais caminhos e passos são mais abertos, para saber onde melhorar.</span></div></div>
+</div></section>
+
+<footer>
+  <div class="wrap">
+    <div class="pill">HTML + CSS + JS</div><div class="pill">Sem build</div><div class="pill">MIT</div>
+    <p style="margin-top:18px">mapa-ajuda · modelo aberto de central de ajuda ·
+      <a href="https://github.com/inematds/mapa-ajuda">inematds/mapa-ajuda</a> ·
+      <a href="https://inema.club">INEMA.CLUB</a></p>
+  </div>
+</footer>
+
+<script>
+  (function(){
+    var KEY='mapa-ajuda-guia-theme';
+    var b=document.body, t=document.getElementById('themeToggle');
+    if(localStorage.getItem(KEY)==='light'){ b.classList.add('light'); t.textContent='☀️'; }
+    t.addEventListener('click',function(){
+      var light=b.classList.toggle('light');
+      t.textContent=light?'☀️':'🌙';
+      localStorage.setItem(KEY, light?'light':'dark');
+    });
+  })();
+</script>
+</body>
+</html>
