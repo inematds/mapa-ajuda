@@ -16,13 +16,18 @@ window.MAPA_AJUDA = {
     ]
   },
   kicker: 'Central de ajuda do ecossistema',
-  titulo: 'Do que você precisa agora?',
+  titulo: 'Do que você **precisa agora?**',
   subtitulo: 'Escolha a situação mais parecida com a sua. O caminho abre com as etapas em ordem e o link certo em cada uma.',
+  capa: 'assets/hero.webp',
+  destaques: ['6 caminhos prontos', 'Link certo em cada etapa', 'Sete sites num mapa só'],
+  gradeTitulo: 'Escolha o seu caminho',
+  gradeSub: 'Clique num cartão para ver as etapas',
   rodape: '**INEMA** · inema.club · inema.pro · inema.vip · eventos.inema.pro · aventura.inema.club',
 
   problemas: [
     {
       id: 'comecar',
+      imagem: 'assets/comecar.webp',
       titulo: 'Não sei por onde começar',
       resumo: 'Primeiro contato com IA ou com o INEMA.',
       icone: 'bussola',
@@ -38,6 +43,7 @@ window.MAPA_AJUDA = {
     },
     {
       id: 'encontrar',
+      imagem: 'assets/encontrar.webp',
       titulo: 'Não encontro um conteúdo',
       resumo: 'Sabe que existe um curso, projeto ou vídeo, mas não acha.',
       icone: 'busca',
@@ -67,6 +73,7 @@ window.MAPA_AJUDA = {
     },
     {
       id: 'suporte',
+      imagem: 'assets/suporte.webp',
       titulo: 'Preciso de ajuda com acesso ou pagamento',
       resumo: 'Login, assinatura, cobrança ou algo que não abre.',
       icone: 'chave',
@@ -82,6 +89,7 @@ window.MAPA_AJUDA = {
     },
     {
       id: 'aprofundar',
+      imagem: 'assets/aprofundar.webp',
       titulo: 'Quero ir mais fundo',
       resumo: 'Trilhas guiadas, acervo, comunidade e imersões.',
       icone: 'camadas',
@@ -107,6 +115,7 @@ window.MAPA_AJUDA = {
     },
     {
       id: 'novidades',
+      imagem: 'assets/novidades.webp',
       titulo: 'Quero acompanhar o que muda em IA',
       resumo: 'Ficar em dia sem gastar horas lendo.',
       icone: 'sinal',
@@ -122,6 +131,7 @@ window.MAPA_AJUDA = {
     },
     {
       id: 'aventura',
+      imagem: 'assets/aventura.webp',
       titulo: 'Vim pelo arquivo de aventura',
       resumo: 'Motos, trilhas e eventos de 2000 a 2014.',
       icone: 'montanha',

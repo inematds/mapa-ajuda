@@ -33,7 +33,7 @@ O que dá força ao padrão são três coisas:
 | Ponto fraco | Neste modelo |
 |---|---|
 | Conteúdo misturado no código (funções que montam HTML com textos e links no meio) | **Motor e conteúdo separados.** Todo o conteúdo fica no `config.js`; o `index.html` não muda |
-| Ilustrações e vídeos em cada cartão (pesado, estilo informal, difícil de manter coerente) | **Ícones de traço e tipografia.** Zero imagem obrigatória; aparência sóbria e carregamento leve |
+| Ilustrações de estilo informal e vídeo em cada cartão (pesado, difícil de manter coerente) | **Uma série de ilustrações 3D no mesmo estilo** (mesma paleta, luz e fundo), leves em WebP, sem texto dentro da imagem; sem imagem, o cartão cai num ícone |
 | Uma marca só, links fixos | **Configuração trocável** por `?config=arquivo.js`, para testar outra marca sem mexer na página |
 | Texto com HTML solto (risco de quebrar a página ou injetar código) | **Texto escapado.** Só `**negrito**` é interpretado; links aceitos só com protocolo seguro |
 | Sem contagem de esforço | Cada cartão mostra **quantas etapas** o caminho tem |
